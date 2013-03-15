@@ -1,0 +1,4 @@
+Initial import of https://github.com/gteissier/srtp-decrypt
+Only keeping srtp.c and srtp.h
+These originally come from the VLC project https://github.com/videolan/vlc,
+from which COPYING is added
