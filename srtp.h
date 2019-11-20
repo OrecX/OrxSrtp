@@ -74,10 +74,9 @@ int srtp_send (srtp_session_t *s, uint8_t *buf, size_t *lenp, size_t maxsize);
 int srtp_recv (srtp_session_t *s, uint8_t *buf, size_t *lenp);
 int srtcp_send (srtp_session_t *s, uint8_t *buf, size_t *lenp, size_t maxsiz);
 int srtcp_recv (srtp_session_t *s, uint8_t *buf, size_t *lenp);
-void srtp_init_seq (srtp_session_t *s, uint8_t *buf);
+uint16_t srtp_init_seq (srtp_session_t *s, uint8_t *buf);
 
 # ifdef __cplusplus
 }
 # endif
 #endif
-

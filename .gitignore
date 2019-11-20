@@ -1,1 +1,4 @@
 *.so
+.cproject
+.project
+*tar
