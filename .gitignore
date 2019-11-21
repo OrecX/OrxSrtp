@@ -2,3 +2,6 @@
 .cproject
 .project
 *tar
+*gz
+*.so
+*.so.*

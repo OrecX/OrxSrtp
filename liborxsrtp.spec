@@ -20,20 +20,23 @@ Name:           liborxsrtp
 Version:        0.1
 Release:        1%{?dist}
 Summary:        SRTP support library
-License:        LGPL
-Group:          System/Libraries
-#Url:            
-Source0:        liborxsrtp-0.1.tar.gz
-#BuildRequires:  
-#Requires:       
+License:        LGPLv2+
+Source:        liborxsrtp-0.1.tar.gz
+
+Requires:       libgcrypt
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Provides: liborxsrtp.so()(64bit)
+
+
 
 %description
+liborxsrtp provides a library version of the SRTP support as originally
+part of  VLC 
 
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/Libraries/
+#Group:          Development/Libraries/
 Requires:       %{name} = %{version}
 
 %description    devel
@@ -49,6 +52,14 @@ make %{?_smp_mflags}
 %install
 %make_install
 find %{buildroot} -type f -name "*.la" -delete -print
+# Overwrite development symlinks.
+pushd $RPM_BUILD_ROOT/%{_libdir}
+for shlib in lib*.so.* ; do
+	 shlib=`echo "$shlib" | sed -e 's,//,/,g'`
+ 	target=`basename "$shlib" | sed -e 's,\.so.*,,g'`.so
+	ln -sf $shlib $target
+done
+popd
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -56,12 +67,15 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %files
 %defattr(-,root,root)
 %doc
-%{_libdir}/*.so.*
+%{_libdir}/*.so*
+%license /usr/share/liborxsrtp/COPYING
+
 
 %files devel
 %defattr(-,root,root)
-%doc
-%{_includedir}/*
-%{_libdir}/*.so
+#%doc
+#%{_includedir}/*
+#%{_libdir}/*.so
+/usr/include/srtp/srtp.h
 
 %changelog

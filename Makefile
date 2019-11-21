@@ -2,8 +2,10 @@ package = liborxsrtp
 version = 0.1
 tarname = $(package)
 distdir = $(tarname)-$(version)
+MAJOR_VER=0
 
-all:liborxsrtp.so
+
+all:liborxsrtp.so.${version}
 
 dist: $(distdir).tar.gz
 
@@ -19,17 +21,19 @@ $(distdir):
 	cp COPYING $(distdir)
 
 clean:
-	rm liborxsrtp.so
+	-rm liborxsrtp.so.${version} $(distdir).tar.gz
 
 
-liborxsrtp.so: srtp.c srtp.h
-	gcc -shared -o liborxsrtp.so -fPIC -O2 srtp.c
+liborxsrtp.so.${version}: srtp.c srtp.h
+	gcc -shared -o liborxsrtp.so.${version} -lgcrypt -fPIC -O2 srtp.c
 
 install:
-	mkdir -p $(DESTDIR)/usr/lib
+	mkdir -p $(DESTDIR)/usr/lib64
 	mkdir -p $(DESTDIR)/usr/share/liborxsrtp
-	install -m 0755 liborxsrtp.so $(DESTDIR)/usr/lib/liborxsrtp.so
+	mkdir -p $(DESTDIR)/usr/include/srtp
+	install -m 0755 liborxsrtp.so.${version} $(DESTDIR)/usr/lib64/liborxsrtp.so.${version}
 	install -m 0755 COPYING $(DESTDIR)/usr/share/liborxsrtp/COPYING
-
+	install -m 0755 srtp.h $(DESTDIR)/usr/include/srtp/
+#	ln -s liborxsrtp.so.$(version) $(DESTDIR)/usr/lib64/liborxsrtp.so
 
 .PHONY: all clean dist
