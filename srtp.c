@@ -840,3 +840,22 @@ srtcp_recv (srtp_session_t *s, uint8_t *buf, size_t *lenp)
     return srtcp_crypt (s, buf, len);
 }
 
+#ifdef USE_PTHREAD
+GCRY_THREAD_OPTION_PTHREAD_IMPL;
+
+const char*  srtp_init()
+{
+	gcry_control(GCRYCTL_SET_THREAD_CBS, &gcry_threads_pthread);
+
+	const char* version = gcry_check_version (NULL);
+	/* Disable secure memory.  */
+	gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+
+
+	/* Tell Libgcrypt that initialization has completed. */
+	gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+
+	return version;
+}
+#endif
+
