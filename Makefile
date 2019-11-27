@@ -25,8 +25,11 @@ clean:
 	-rm liborxsrtp.so.${version} $(distdir).tar.gz
 
 
-liborxsrtp.so.${version}: srtp.c srtp.h
-	gcc -shared -o liborxsrtp.so.${version} -lgcrypt -fPIC -O2 -DUSE_PTHREAD srtp.c
+srtp.o: srtp.c srtp.h Makefile
+	gcc -c -o srtp.o -fPIC -O2 -DUSE_PTHREAD srtp.c
+
+liborxsrtp.so.${version}: srtp.o
+	gcc -shared -o liborxsrtp.so.${version}  srtp.o -lgcrypt
 
 install:
 	mkdir -p $(DESTDIR)$(LIBDIR)
