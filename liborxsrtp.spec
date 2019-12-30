@@ -20,8 +20,8 @@ Name:           liborxsrtp
 Version:        0.1
 Release:        1%{?dist}
 Summary:        SRTP support library
-License:        LGPLv2+
 Source:        liborxsrtp-0.1.tar.gz
+License:        LGPLv2+
 
 Requires:       libgcrypt
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -67,8 +67,9 @@ popd
 %files
 %defattr(-,root,root)
 %doc
-%{_libdir}/*.so*
-%license /usr/share/liborxsrtp/COPYING
+%{_libdir}/liborxsrtp.so.%{version}
+%{_libdir}/liborxsrtp.so
+ /usr/share/liborxsrtp/COPYING
 
 
 %files devel

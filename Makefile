@@ -3,12 +3,15 @@ version = 0.1
 tarname = $(package)
 distdir = $(tarname)-$(version)
 MAJOR_VER=0
-LIBDIR=/usr/lib
+LIBDIR=/usr/lib64
 
 
 all:liborxsrtp.so.${version}
 
 dist: $(distdir).tar.gz
+
+distclean:
+	-rm $(distdir).tar.gz
 
 $(distdir).tar.gz: $(distdir)
 	tar chof - $(distdir) | gzip -9 -c > $@
@@ -40,4 +43,4 @@ install:
 	install -m 0755 srtp.h $(DESTDIR)/usr/include/srtp/
 	ln -sf liborxsrtp.so.$(version) $(DESTDIR)$(LIBDIR)/liborxsrtp.so
 
-.PHONY: all clean dist
+.PHONY: all clean dist distclean
