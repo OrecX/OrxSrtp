@@ -1,5 +1,5 @@
 package = liborxsrtp
-version = 0.1
+version = 0.2
 tarname = $(package)
 distdir = $(tarname)-$(version)
 MAJOR_VER=0
