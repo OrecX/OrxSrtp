@@ -18,7 +18,7 @@
 
 Name:           liborxsrtp
 Version:        0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SRTP support library
 Source:        liborxsrtp-%{version}.tar.gz
 License:        LGPLv2+

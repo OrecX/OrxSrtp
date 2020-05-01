@@ -29,7 +29,7 @@ clean:
 
 
 srtp.o: srtp.c srtp.h Makefile
-	gcc -c -o srtp.o -fPIC -O2 -DUSE_PTHREAD srtp.c
+	gcc -c -o srtp.o -fPIC -O2 -DUSE_PTHREAD -g srtp.c
 
 liborxsrtp.so.${version}: srtp.o
 	gcc -shared -o liborxsrtp.so.${version}  srtp.o -lgcrypt
@@ -39,8 +39,8 @@ install:
 	mkdir -p $(DESTDIR)/usr/share/liborxsrtp
 	mkdir -p $(DESTDIR)/usr/include/srtp
 	install -m 0755 liborxsrtp.so.${version} $(DESTDIR)$(LIBDIR)/liborxsrtp.so.${version}
-	install -m 0755 COPYING $(DESTDIR)/usr/share/liborxsrtp/COPYING
-	install -m 0755 srtp.h $(DESTDIR)/usr/include/srtp/
+	install -m 0644 COPYING $(DESTDIR)/usr/share/liborxsrtp/COPYING
+	install -m 0644 srtp.h $(DESTDIR)/usr/include/srtp/
 	ln -sf liborxsrtp.so.$(version) $(DESTDIR)$(LIBDIR)/liborxsrtp.so
 
 .PHONY: all clean dist distclean
